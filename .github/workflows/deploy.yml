@@ -48,6 +48,7 @@ jobs:
           cd /var/www/inventory-app
           
           # Auto-create .env file to prevent missing file error
+          rm -rf .env
           echo "APP_NAME=StockMaster" > .env
           echo "APP_ENV=production" >> .env
           echo "APP_KEY=base64:Zlcvuy+a3FPh1jJMRKTGhWPeySXS0HqITY9hW8VuSA4=" >> .env
