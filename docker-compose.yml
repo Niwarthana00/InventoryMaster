@@ -36,7 +36,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_USER: ${DB_USERNAME}
     volumes:
-      - dbdata:/var/lib/mysql
+      - dbdata-clean:/var/lib/mysql
     networks:
       - inventory-network
 
@@ -45,7 +45,7 @@ networks:
     driver: bridge
 
 volumes:
-  dbdata:
+  dbdata-clean:
     driver: local
   web-root-clean:
     driver: local
