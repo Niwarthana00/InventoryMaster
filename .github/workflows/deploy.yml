@@ -58,10 +58,10 @@ jobs:
           docker-compose down
           
           # Start Containers
-          DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/inventory-app:latest docker-compose up -d
+          DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/inventory-app:latest docker-compose --env-file .env up -d
           
           # Wait for DB
           sleep 30
           
           # Run Migrations
-          DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/inventory-app:latest docker-compose exec -T app php artisan migrate --force
+          DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/inventory-app:latest docker-compose --env-file .env exec -T app php artisan migrate --force
