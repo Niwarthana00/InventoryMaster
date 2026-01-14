@@ -13,40 +13,47 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-900 selection:bg-blue-500 selection:text-white">
-            <nav class="bg-gray-800 border-b border-gray-700">
+            <nav class="bg-gray-800 border-b border-gray-700 h-20 flex items-center">
                 <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                    <div class="flex justify-between items-center h-full">
+                        <div class="flex items-center">
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <BreezeApplicationLogo class="block h-9 w-auto text-blue-500" />
+                            <div class="shrink-0 flex items-center gap-3">
+                                <Link :href="route('dashboard')" class="flex items-center gap-3">
+                                    <div class="bg-blue-600/20 p-2 rounded-lg">
+                                        <BreezeApplicationLogo class="block h-8 w-auto text-blue-500" />
+                                    </div>
+                                    <span class="text-2xl font-bold text-white tracking-tight">StockMaster</span>
                                 </Link>
-                            </div>
-
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')" class="text-gray-300 hover:text-white">
-                                    Dashboard
-                                </BreezeNavLink>
                             </div>
                         </div>
 
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <!-- Settings Dropdown -->
-                            <div class="ml-3 relative">
+                        <!-- Search Slot (Middle) -->
+                        <div class="flex-1 flex items-center justify-center max-w-2xl mx-auto px-6 hidden md:flex" v-if="$slots.search">
+                            <slot name="search" />
+                        </div>
+                        <div class="flex-1" v-else></div>
+
+                        <div class="hidden sm:flex sm:items-center sm:ml-6 gap-6">
+                            <!-- Actions Slot -->
+                            <div v-if="$slots.actions">
+                                <slot name="actions" />
+                            </div>
+
+                            <!-- User Profile -->
+                            <div class="ml-3 relative border-l border-gray-700 pl-6">
                                 <BreezeDropdown align="right" width="48">
                                     <template #trigger>
-                                        <span class="inline-flex rounded-md">
-                                            <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-300 bg-gray-800 hover:text-white focus:outline-none transition ease-in-out duration-150">
-                                                {{ $page.props.auth.user.name }}
-
-                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                                </svg>
-                                            </button>
-                                        </span>
+                                        <button type="button" class="flex items-center gap-3 text-sm font-medium text-gray-300 hover:text-white transition focus:outline-none group">
+                                            <div class="text-right hidden md:block group-hover:text-blue-400 transition">
+                                                <div class="text-white font-bold leading-tight">{{ $page.props.auth.user.name }}</div>
+                                                <div class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Admin</div>
+                                            </div>
+                                            <div class="bg-gray-700 p-1.5 rounded-lg border border-gray-600 group-hover:border-gray-500 transition">
+                                                <svg class="h-5 w-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                            </div>
+                                        </button>
                                     </template>
 
                                     <template #content>
@@ -71,11 +78,15 @@ const showingNavigationDropdown = ref(false);
                 </div>
 
                 <!-- Responsive Navigation Menu -->
-                <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden bg-gray-800">
+                <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden bg-gray-800 absolute top-20 left-0 w-full z-50 border-b border-gray-700 shadow-xl">
                     <div class="pt-2 pb-3 space-y-1">
                         <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </BreezeResponsiveNavLink>
+                        <!-- Mobile Search Placeholder -->
+                         <div class="px-4 py-2" v-if="$slots.search">
+                            <slot name="search" />
+                         </div>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -94,16 +105,13 @@ const showingNavigationDropdown = ref(false);
                 </div>
             </nav>
 
-            <!-- Page Heading -->
-            <header class="bg-gray-800 shadow border-b border-gray-700" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-gray-200">
-                    <slot name="header" />
-                </div>
-            </header>
-
             <!-- Page Content -->
             <main>
-                <slot />
+                <div class="py-6">
+                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                         <slot />
+                    </div>
+                </div>
             </main>
         </div>
     </div>
