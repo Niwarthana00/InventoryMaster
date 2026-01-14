@@ -27,7 +27,7 @@ const props = defineProps({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 
                 <!-- Item Summary Card -->
-                <div class="bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg p-6 border border-gray-700">
+                <div class="bg-[#010e21] overflow-hidden shadow-lg sm:rounded-lg p-6 border border-gray-700">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="p-4 bg-gray-900 rounded-lg border border-blue-900">
                             <div class="text-sm text-blue-400 font-medium uppercase">Current Stock</div>
@@ -45,13 +45,13 @@ const props = defineProps({
                 </div>
 
                 <!-- Transaction History -->
-                <div class="bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg border border-gray-700">
-                    <div class="p-6 bg-gray-800 border-b border-gray-700">
+                <div class="bg-[#010e21] overflow-hidden shadow-lg sm:rounded-lg border border-gray-700">
+                    <div class="p-6 bg-[#010e21] border-b border-gray-700">
                         <h3 class="text-lg font-medium text-white mb-4">Transaction History</h3>
                         
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-700">
-                                <thead class="bg-gray-900">
+                                <thead class="bg-[#010e21]">
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Type</th>
@@ -61,7 +61,7 @@ const props = defineProps({
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Note</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                                <tbody class="bg-[#010e21] divide-y divide-gray-700">
                                     <tr v-for="t in transactions" :key="t.id" class="hover:bg-gray-700 transition duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                                             {{ new Date(t.created_at).toLocaleString() }}
