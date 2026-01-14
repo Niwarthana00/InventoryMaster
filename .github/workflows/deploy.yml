@@ -47,6 +47,19 @@ jobs:
         script: |
           cd /var/www/inventory-app
           
+          # Auto-create .env file to prevent missing file error
+          echo "APP_NAME=StockMaster" > .env
+          echo "APP_ENV=production" >> .env
+          echo "APP_KEY=base64:Zlcvuy+a3FPh1jJMRKTGhWPeySXS0HqITY9hW8VuSA4=" >> .env
+          echo "APP_DEBUG=false" >> .env
+          echo "APP_URL=http://174.138.86.39" >> .env
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=db" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=inventory_db" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=root_password" >> .env
+
           # Login to Docker Hub
           echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
           
