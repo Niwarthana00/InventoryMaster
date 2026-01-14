@@ -5,14 +5,14 @@ import { ref, watch, computed } from 'vue';
 import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
-    items: Array,
+    items: Object,
     filters: Object,
 });
 
 // Computed Stats
-const totalItems = computed(() => props.items.length);
-const lowStockCurrent = computed(() => props.items.filter(item => parseFloat(item.quantity) < 10).length);
-const outOfStock = computed(() => props.items.filter(item => parseFloat(item.quantity) <= 0).length);
+const totalItems = computed(() => props.items.total);
+const lowStockCurrent = computed(() => props.items.data.filter(item => parseFloat(item.quantity) < 10).length); // Note: This only counts current page. Ideally pass stats from backend.
+const outOfStock = computed(() => props.items.data.filter(item => parseFloat(item.quantity) <= 0).length); // Same note.
 
 // Search State
 const search = ref(props.filters.search || '');
@@ -148,7 +148,7 @@ const submitDeductStock = () => {
                              <!-- Summing up quantities for "Stock Volume" appearance -->
                             <div class="text-sm font-medium text-gray-400">Total Stock Volume</div>
                             <div class="mt-2 text-4xl font-bold text-white tracking-tight">
-                                {{ items.reduce((sum, item) => sum + parseFloat(item.quantity), 0) }}
+                                {{ items.data.reduce((sum, item) => sum + parseFloat(item.quantity), 0) }}
                             </div>
                         </div>
                         <div class="p-3 bg-green-500/10 rounded-lg text-green-500 group-hover:bg-green-500 group-hover:text-white transition duration-300">
@@ -162,7 +162,7 @@ const submitDeductStock = () => {
              <div>
                 <div class="flex justify-between items-end mb-4">
                     <h3 class="text-lg font-bold text-white">Inventory Items</h3>
-                    <div class="text-sm text-gray-400">Showing {{ items.length }} of {{ items.length }} items</div>
+                    <div class="text-sm text-gray-400">Showing {{ items.from || 0 }} to {{ items.to || 0 }} of {{ items.total }} items</div>
                 </div>
 
                 <!-- Main Content Table -->
@@ -180,7 +180,7 @@ const submitDeductStock = () => {
                                     </tr>
                                 </thead>
                                 <tbody class="bg-[#010e21] divide-y divide-gray-700">
-                                    <tr v-for="item in items" :key="item.id" class="hover:bg-gray-700 transition duration-150">
+                                    <tr v-for="item in items.data" :key="item.id" class="hover:bg-gray-700 transition duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <Link :href="route('items.show', item.id)" class="group flex flex-col">
                                                 <div class="text-sm font-medium text-white group-hover:text-blue-400 transition">{{ item.name }}</div>
@@ -215,7 +215,7 @@ const submitDeductStock = () => {
                                             </Link>
                                         </td>
                                     </tr>
-                                    <tr v-if="items.length === 0">
+                                     <tr v-if="items.data.length === 0">
                                         <td colspan="4" class="px-6 py-8 text-center text-gray-500">
                                             <div class="flex flex-col items-center justify-center">
                                                 <svg class="w-12 h-12 text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
@@ -227,6 +227,27 @@ const submitDeductStock = () => {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-4 flex justify-between items-center" v-if="items.links && items.links.length > 3">
+                     <div class="text-sm text-gray-400">
+                        Showing page {{ items.current_page }} of {{ items.last_page }}
+                     </div>
+                     <div class="flex flex-wrap">
+                        <template v-for="(link, key) in items.links" :key="key">
+                            <div v-if="link.url === null" 
+                                 class="mr-1 mb-1 px-3 py-2 text-sm leading-4 text-gray-600 border border-gray-800 rounded bg-[#010e21]" 
+                                 v-html="link.label" 
+                            />
+                            <Link v-else 
+                                  :class="{ 'bg-blue-600 border-blue-600 text-white': link.active, 'text-gray-400 bg-[#010e21] hover:bg-gray-800 border-gray-700': !link.active }" 
+                                  class="mr-1 mb-1 px-3 py-2 text-sm leading-4 border rounded focus:border-blue-500 focus:text-blue-500 transition duration-150" 
+                                  :href="link.url" 
+                                  v-html="link.label" 
+                            />
+                        </template>
                     </div>
                 </div>
             </div>

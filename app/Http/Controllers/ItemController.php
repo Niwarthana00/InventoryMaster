@@ -29,7 +29,7 @@ class ItemController extends Controller
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        $items = $query->latest()->get(); // Simple list for now
+        $items = $query->latest()->paginate(10)->withQueryString();
 
         return Inertia::render('Dashboard', [
             'items' => $items,
