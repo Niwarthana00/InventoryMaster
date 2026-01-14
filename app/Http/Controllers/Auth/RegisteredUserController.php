@@ -34,10 +34,11 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        // FIX: Using simple string validation to avoid PHP 8.0 array syntax issues with Password rule
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => 'required|confirmed|min:8',
         ]);
 
         $user = User::create([

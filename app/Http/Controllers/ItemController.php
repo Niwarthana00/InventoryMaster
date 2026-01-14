@@ -31,7 +31,7 @@ class ItemController extends Controller
 
         $items = $query->latest()->get(); // Simple list for now
 
-        return Inertia::render('Inventory/Index', [
+        return Inertia::render('Dashboard', [
             'items' => $items,
             'filters' => $request->only(['search']),
         ]);
