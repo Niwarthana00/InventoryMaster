@@ -1,12 +1,4 @@
-# Stage 1: Build Frontend Assets (Vite build)
-FROM node:20 as frontend
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-
-# Stage 2: Setup PHP & Laravel App
+# Setup PHP & Laravel App
 FROM php:8.2-fpm
 
 # Install system dependencies
@@ -33,10 +25,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 
 # Copy existing application directory contents
+# This will now include public/build since we removed it from .gitignore
 COPY . /var/www
-
-# Copy built frontend assets from Stage 1
-COPY --from=frontend /app/public/build /var/www/public/build
 
 # Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev
