@@ -32,7 +32,7 @@ const showDeductStockModal = ref(false);
 const selectedItem = ref(null);
 
 // Forms
-const createForm = useForm({ name: '', unit: '' });
+const createForm = useForm({ name: '', unit: '', quantity: '' });
 const stockForm = useForm({ quantity: '', note: '' });
 
 // Actions
@@ -48,9 +48,14 @@ const openDeductStock = (item) => {
     showDeductStockModal.value = true;
 };
 
-const submitCreate = () => {
+const submitCreate = (addAnother = false) => {
     createForm.post(route('items.store'), {
-        onSuccess: () => { showCreateModal.value = false; createForm.reset(); },
+        onSuccess: () => {
+            createForm.reset();
+            if (!addAnother) {
+                showCreateModal.value = false;
+            }
+        },
     });
 };
 
@@ -186,30 +191,55 @@ const submitDeductStock = () => {
 
         <!-- Create Item Modal -->
         <div v-if="showCreateModal" class="fixed inset-0 overflow-y-auto px-4 py-6 z-50 flex items-center justify-center">
-            <div class="fixed inset-0 bg-black opacity-70 transition-opacity" @click="showCreateModal = false"></div>
+            <div class="fixed inset-0 bg-black opacity-80 transition-opacity" @click="showCreateModal = false"></div>
             <div class="bg-gray-800 rounded-lg shadow-2xl transform transition-all sm:w-full sm:max-w-md z-10 border border-gray-700">
-                <div class="px-6 py-4 border-b border-gray-700 flex justify-between items-center">
-                    <h3 class="text-lg font-medium text-white">New Item</h3>
-                    <button @click="showCreateModal = false" class="text-gray-400 hover:text-gray-200 focus:outline-none">
+                <div class="px-6 py-4 border-b border-gray-700 flex justify-between items-center bg-gray-900 rounded-t-lg">
+                    <h3 class="text-lg font-medium text-white">Add Inventory Items</h3>
+                    <button @click="showCreateModal = false" class="text-gray-400 hover:text-white focus:outline-none">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
-                <div class="p-6">
-                    <div class="space-y-4">
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Item Name</label>
+                        <input type="text" v-model="createForm.name" class="block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-2.5 px-3" placeholder="e.g. Steel Rods">
+                        <div v-if="createForm.errors.name" class="text-red-400 text-xs mt-1">{{ createForm.errors.name }}</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-300">Item Name</label>
-                            <input type="text" v-model="createForm.name" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm placeholder-gray-500" placeholder="e.g. Laptop Stand">
-                            <div v-if="createForm.errors.name" class="text-red-400 text-xs mt-1">{{ createForm.errors.name }}</div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Quantity</label>
+                            <input type="number" step="0.001" v-model="createForm.quantity" class="block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-2.5 px-3" placeholder="0">
+                            <div v-if="createForm.errors.quantity" class="text-red-400 text-xs mt-1">{{ createForm.errors.quantity }}</div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-300">Unit</label>
-                            <input type="text" v-model="createForm.unit" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm placeholder-gray-500" placeholder="e.g. pcs, kg">
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Unit</label>
+                            <select v-model="createForm.unit" class="block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm py-2.5 px-3">
+                                <option value="" disabled selected>Select Unit</option>
+                                <option value="pcs">pcs (Pieces)</option>
+                                <option value="kg">kg (Kilograms)</option>
+                                <option value="g">g (Grams)</option>
+                                <option value="l">l (Liters)</option>
+                                <option value="ml">ml (Milliliters)</option>
+                                <option value="m">m (Meters)</option>
+                                <option value="cm">cm (Centimeters)</option>
+                                <option value="box">box</option>
+                                <option value="roll">roll</option>
+                                <option value="pack">pack</option>
+                            </select>
                             <div v-if="createForm.errors.unit" class="text-red-400 text-xs mt-1">{{ createForm.errors.unit }}</div>
                         </div>
                     </div>
-                    <div class="mt-6 flex justify-end space-x-3">
-                        <button type="button" @click="showCreateModal = false" class="px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Cancel</button>
-                        <button type="button" @click="submitCreate" :disabled="createForm.processing" class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Create Item</button>
+                </div>
+                <div class="px-6 py-4 bg-gray-900 rounded-b-lg border-t border-gray-700 flex justify-between items-center">
+                    <button type="button" @click="submitCreate(true)" :disabled="createForm.processing" class="inline-flex items-center px-4 py-2 bg-gray-700 border border-gray-600 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-600 focus:outline-none focus:border-gray-500 focus:shadow-outline-gray transition ease-in-out duration-150">
+                        + Add Another Item
+                    </button>
+                    <div class="flex space-x-3">
+                        <button type="button" @click="showCreateModal = false" class="text-gray-400 hover:text-white text-sm font-medium">Cancel</button>
+                        <button type="button" @click="submitCreate(false)" :disabled="createForm.processing" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:shadow-outline-blue transition ease-in-out duration-150">
+                            Save Items
+                        </button>
                     </div>
                 </div>
             </div>
@@ -225,7 +255,7 @@ const submitDeductStock = () => {
                 <div class="p-6">
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-300">Quantity to Add</label>
+                            <label class="block text-sm font-medium text-gray-300">Quantity to Add ({{ selectedItem?.unit }})</label>
                             <input type="number" step="0.001" v-model="stockForm.quantity" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm placeholder-gray-500" placeholder="0.00">
                             <div v-if="stockForm.errors.quantity" class="text-red-400 text-xs mt-1">{{ stockForm.errors.quantity }}</div>
                         </div>
@@ -246,25 +276,30 @@ const submitDeductStock = () => {
         <div v-if="showDeductStockModal" class="fixed inset-0 overflow-y-auto px-4 py-6 z-50 flex items-center justify-center">
             <div class="fixed inset-0 bg-black opacity-70 transition-opacity" @click="showDeductStockModal = false"></div>
             <div class="bg-gray-800 rounded-lg shadow-2xl transform transition-all sm:w-full sm:max-w-md z-10 border border-gray-700">
-                <div class="px-6 py-4 border-b border-gray-700 bg-red-900 bg-opacity-20 rounded-t-lg">
-                    <h3 class="text-lg font-medium text-red-400">Deduct Stock: {{ selectedItem?.name }}</h3>
+                <div class="px-6 py-4 border-b border-gray-700 bg-gray-900 rounded-t-lg flex justify-between">
+                    <h3 class="text-lg font-medium text-white">Deduct Stock: <span class="text-gray-300">{{ selectedItem?.name }}</span></h3>
+                    <button @click="showDeductStockModal = false" class="text-gray-400 hover:text-white focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
                 </div>
-                <div class="p-6">
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300">Quantity to Deduct</label>
-                            <input type="number" step="0.001" v-model="stockForm.quantity" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm placeholder-gray-500" placeholder="0.00">
-                            <div v-if="stockForm.errors.quantity" class="text-red-400 text-xs mt-1">{{ stockForm.errors.quantity }}</div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-300">Reason (Optional)</label>
-                            <input type="text" v-model="stockForm.note" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm placeholder-gray-500" placeholder="e.g. Sales, Damaged">
-                        </div>
+                <div class="p-6 space-y-4">
+                    <!-- Highlited Current Stock Box -->
+                    <div class="bg-yellow-900/20 border border-yellow-700/50 rounded-md p-4 flex items-center shadow-inner">
+                        <span class="text-yellow-500 font-medium">Current Stock:</span>
+                        <span class="ml-2 text-yellow-400 font-bold text-lg">{{ parseFloat(selectedItem?.quantity) }} {{ selectedItem?.unit }}</span>
                     </div>
-                    <div class="mt-6 flex justify-end space-x-3">
-                        <button type="button" @click="showDeductStockModal = false" class="px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-600">Cancel</button>
-                        <button type="button" @click="submitDeductStock" :disabled="stockForm.processing" class="px-4 py-2 bg-red-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Confirm Deduct</button>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Quantity to Deduct</label>
+                        <input type="number" step="0.001" v-model="stockForm.quantity" class="block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm py-2.5 px-3" placeholder="0.00">
+                        <div v-if="stockForm.errors.quantity" class="text-red-400 text-xs mt-1">{{ stockForm.errors.quantity }}</div>
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Reason / Note (Optional)</label>
+                        <input type="text" v-model="stockForm.note" class="block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm py-2.5 px-3" placeholder="e.g. Sales, Damaged">
+                    </div>
+                </div>
+                <div class="px-6 py-4 bg-gray-900 rounded-b-lg border-t border-gray-700 flex justify-end space-x-3">
+                    <button type="button" @click="showDeductStockModal = false" class="text-gray-400 hover:text-white text-sm font-medium">Cancel</button>
+                    <button type="button" @click="submitDeductStock" :disabled="stockForm.processing" class="px-4 py-2 bg-red-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Deduct Stock</button>
                 </div>
             </div>
         </div>

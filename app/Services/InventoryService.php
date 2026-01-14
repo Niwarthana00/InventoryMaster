@@ -12,13 +12,24 @@ class InventoryService
     /**
      * Create a new item in the inventory.
      */
-    public function createItem(array $data)
+    public function createItem(array $data, $userId = null)
     {
-        return Item::create([
-            'name' => $data['name'],
-            'unit' => $data['unit'],
-            'quantity' => 0, // Initial stock is 0, add via transaction ideally, or set custom
-        ]);
+        return DB::transaction(function () use ($data, $userId) {
+            $item = Item::create([
+                'name' => $data['name'],
+                'unit' => $data['unit'],
+                'quantity' => 0,
+            ]);
+
+            if (isset($data['quantity']) && $data['quantity'] > 0) {
+                // Determine user ID if not explicitly passed
+                $transactionUserId = $userId ?? (isset($data['user_id']) ? $data['user_id'] : (auth()->check() ? auth()->id() : null));
+
+                $this->addStock($item, $data['quantity'], 'Initial Stock', $transactionUserId);
+            }
+
+            return $item;
+        });
     }
 
     /**

@@ -45,9 +45,10 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string|unique:items,name|max:255',
             'unit' => 'required|string|max:10',
+            'quantity' => 'nullable|numeric|min:0',
         ]);
 
-        $this->inventoryService->createItem($request->all());
+        $this->inventoryService->createItem($request->all(), auth()->id());
 
         return redirect()->back()->with('success', 'Item created successfully.');
     }
