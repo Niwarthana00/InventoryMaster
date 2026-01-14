@@ -182,8 +182,10 @@ const submitDeductStock = () => {
                                 <tbody class="bg-[#010e21] divide-y divide-gray-700">
                                     <tr v-for="item in items" :key="item.id" class="hover:bg-gray-700 transition duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-white">{{ item.name }}</div>
-                                            <div class="text-xs text-gray-500">ID: #{{ item.id }}</div>
+                                            <Link :href="route('items.show', item.id)" class="group flex flex-col">
+                                                <div class="text-sm font-medium text-white group-hover:text-blue-400 transition">{{ item.name }}</div>
+                                                <div class="text-xs text-gray-500">ID: #{{ item.id }}</div>
+                                            </Link>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-700 text-gray-300 border border-gray-600">
