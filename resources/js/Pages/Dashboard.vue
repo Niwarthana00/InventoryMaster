@@ -72,7 +72,7 @@ const submitDeductStock = () => {
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-200 leading-tight">
                 Inventory Overview
             </h2>
         </template>
@@ -82,40 +82,40 @@ const submitDeductStock = () => {
                 
                 <!-- Stats Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6 border-l-4 border-blue-500">
-                        <div class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Items</div>
-                        <div class="mt-2 text-3xl font-bold text-gray-900">{{ totalItems }}</div>
+                    <div class="bg-gray-800 overflow-hidden shadow-lg rounded-lg p-6 border-l-4 border-blue-500">
+                        <div class="text-sm font-medium text-gray-400 uppercase tracking-wider">Total Items</div>
+                        <div class="mt-2 text-3xl font-bold text-white">{{ totalItems }}</div>
                     </div>
-                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6 border-l-4 border-yellow-500">
-                        <div class="text-sm font-medium text-gray-500 uppercase tracking-wider">Low Stock (< 10)</div>
-                        <div class="mt-2 text-3xl font-bold text-gray-900">{{ lowStockCurrent }}</div>
+                    <div class="bg-gray-800 overflow-hidden shadow-lg rounded-lg p-6 border-l-4 border-yellow-500">
+                        <div class="text-sm font-medium text-gray-400 uppercase tracking-wider">Low Stock (< 10)</div>
+                        <div class="mt-2 text-3xl font-bold text-white">{{ lowStockCurrent }}</div>
                     </div>
-                    <div class="bg-white overflow-hidden shadow-sm rounded-lg p-6 border-l-4 border-red-500">
-                        <div class="text-sm font-medium text-gray-500 uppercase tracking-wider">Out of Stock</div>
-                        <div class="mt-2 text-3xl font-bold text-gray-900">{{ outOfStock }}</div>
+                    <div class="bg-gray-800 overflow-hidden shadow-lg rounded-lg p-6 border-l-4 border-red-500">
+                        <div class="text-sm font-medium text-gray-400 uppercase tracking-wider">Out of Stock</div>
+                        <div class="mt-2 text-3xl font-bold text-white">{{ outOfStock }}</div>
                     </div>
                 </div>
 
                 <!-- Main Content -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
+                <div class="bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg border border-gray-700">
+                    <div class="p-6 bg-gray-800 border-b border-gray-700">
                         
                         <!-- Toolbar -->
                         <div class="flex flex-col md:flex-row justify-between items-center mb-6 space-y-4 md:space-y-0">
                             <div class="relative w-full md:w-1/3">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                 </span>
                                 <input 
                                     v-model="search"
                                     type="text" 
                                     placeholder="Search inventory..." 
-                                    class="w-full pl-10 pr-4 py-2 border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                                    class="w-full pl-10 pr-4 py-2 bg-gray-900 border-gray-600 text-gray-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out placeholder-gray-500"
                                 >
                             </div>
                             <button 
                                 @click="showCreateModal = true"
-                                class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:shadow-outline-blue transition ease-in-out duration-150 shadow-md"
+                                class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:border-blue-800 focus:shadow-outline-blue transition ease-in-out duration-150 shadow-md transform hover:scale-105"
                             >
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                                 Add New Item
@@ -124,45 +124,45 @@ const submitDeductStock = () => {
 
                         <!-- Table -->
                         <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
+                            <table class="min-w-full divide-y divide-gray-700">
+                                <thead class="bg-gray-900">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Item Name</th>
-                                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Unit</th>
-                                        <th class="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Stock Level</th>
-                                        <th class="px-6 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
+                                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Item Name</th>
+                                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Unit</th>
+                                        <th class="px-6 py-3 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Stock Level</th>
+                                        <th class="px-6 py-3 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr v-for="item in items" :key="item.id" class="hover:bg-gray-50 transition duration-150">
+                                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                                    <tr v-for="item in items" :key="item.id" class="hover:bg-gray-700 transition duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-gray-900">{{ item.name }}</div>
-                                            <div class="text-xs text-gray-400">ID: #{{ item.id }}</div>
+                                            <div class="text-sm font-medium text-white">{{ item.name }}</div>
+                                            <div class="text-xs text-gray-500">ID: #{{ item.id }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-700 text-gray-300 border border-gray-600">
                                                 {{ item.unit }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right">
                                             <span class="text-sm font-bold" 
                                                 :class="{
-                                                    'text-green-600': Number(item.quantity) >= 10,
-                                                    'text-yellow-600': Number(item.quantity) < 10 && Number(item.quantity) > 0,
-                                                    'text-red-600': Number(item.quantity) <= 0
+                                                    'text-green-400': Number(item.quantity) >= 10,
+                                                    'text-yellow-400': Number(item.quantity) < 10 && Number(item.quantity) > 0,
+                                                    'text-red-400': Number(item.quantity) <= 0
                                                 }"
                                             >
                                                 {{ parseFloat(item.quantity) }}
                                             </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium space-x-2">
-                                            <button @click="openAddStock(item)" class="text-green-600 hover:text-green-900 bg-green-50 hover:bg-green-100 px-3 py-1 rounded-md transition duration-150 border border-green-200" title="Add Stock">
+                                            <button @click="openAddStock(item)" class="text-green-400 hover:text-green-300 bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-md transition duration-150 border border-green-900" title="Add Stock">
                                                 <span class="flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg> Add</span>
                                             </button>
-                                            <button @click="openDeductStock(item)" class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 px-3 py-1 rounded-md transition duration-150 border border-red-200" title="Deduct Stock">
+                                            <button @click="openDeductStock(item)" class="text-red-400 hover:text-red-300 bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-md transition duration-150 border border-red-900" title="Deduct Stock">
                                                 <span class="flex items-center"><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg> Deduct</span>
                                             </button>
-                                            <Link :href="route('items.show', item.id)" class="text-gray-500 hover:text-blue-600 inline-flex items-center ml-2" title="View History">
+                                            <Link :href="route('items.show', item.id)" class="text-blue-400 hover:text-blue-300 inline-flex items-center ml-2 transition-colors" title="View History">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                             </Link>
                                         </td>
@@ -170,9 +170,9 @@ const submitDeductStock = () => {
                                     <tr v-if="items.length === 0">
                                         <td colspan="4" class="px-6 py-8 text-center text-gray-500">
                                             <div class="flex flex-col items-center justify-center">
-                                                <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
-                                                <p>No inventory items found.</p>
-                                                <p class="text-sm mt-1">Get started by adding a new item.</p>
+                                                <svg class="w-12 h-12 text-gray-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                                                <p class="text-gray-400">No inventory items found.</p>
+                                                <p class="text-sm mt-1 text-gray-500">Get started by adding a new item.</p>
                                             </div>
                                         </td>
                                     </tr>
@@ -186,29 +186,29 @@ const submitDeductStock = () => {
 
         <!-- Create Item Modal -->
         <div v-if="showCreateModal" class="fixed inset-0 overflow-y-auto px-4 py-6 z-50 flex items-center justify-center">
-            <div class="fixed inset-0 bg-gray-900 opacity-50 transition-opacity" @click="showCreateModal = false"></div>
-            <div class="bg-white rounded-lg shadow-xl transform transition-all sm:w-full sm:max-w-md z-10">
-                <div class="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                    <h3 class="text-lg font-medium text-gray-900">New Item</h3>
-                    <button @click="showCreateModal = false" class="text-gray-400 hover:text-gray-500 focus:outline-none">
+            <div class="fixed inset-0 bg-black opacity-70 transition-opacity" @click="showCreateModal = false"></div>
+            <div class="bg-gray-800 rounded-lg shadow-2xl transform transition-all sm:w-full sm:max-w-md z-10 border border-gray-700">
+                <div class="px-6 py-4 border-b border-gray-700 flex justify-between items-center">
+                    <h3 class="text-lg font-medium text-white">New Item</h3>
+                    <button @click="showCreateModal = false" class="text-gray-400 hover:text-gray-200 focus:outline-none">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
                 <div class="p-6">
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Item Name</label>
-                            <input type="text" v-model="createForm.name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="e.g. Laptop Stand">
-                            <div v-if="createForm.errors.name" class="text-red-500 text-xs mt-1">{{ createForm.errors.name }}</div>
+                            <label class="block text-sm font-medium text-gray-300">Item Name</label>
+                            <input type="text" v-model="createForm.name" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm placeholder-gray-500" placeholder="e.g. Laptop Stand">
+                            <div v-if="createForm.errors.name" class="text-red-400 text-xs mt-1">{{ createForm.errors.name }}</div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Unit</label>
-                            <input type="text" v-model="createForm.unit" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="e.g. pcs, kg">
-                            <div v-if="createForm.errors.unit" class="text-red-500 text-xs mt-1">{{ createForm.errors.unit }}</div>
+                            <label class="block text-sm font-medium text-gray-300">Unit</label>
+                            <input type="text" v-model="createForm.unit" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm placeholder-gray-500" placeholder="e.g. pcs, kg">
+                            <div v-if="createForm.errors.unit" class="text-red-400 text-xs mt-1">{{ createForm.errors.unit }}</div>
                         </div>
                     </div>
                     <div class="mt-6 flex justify-end space-x-3">
-                        <button type="button" @click="showCreateModal = false" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Cancel</button>
+                        <button type="button" @click="showCreateModal = false" class="px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Cancel</button>
                         <button type="button" @click="submitCreate" :disabled="createForm.processing" class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Create Item</button>
                     </div>
                 </div>
@@ -217,25 +217,25 @@ const submitDeductStock = () => {
 
         <!-- Add Stock Modal -->
         <div v-if="showAddStockModal" class="fixed inset-0 overflow-y-auto px-4 py-6 z-50 flex items-center justify-center">
-            <div class="fixed inset-0 bg-gray-900 opacity-50 transition-opacity" @click="showAddStockModal = false"></div>
-            <div class="bg-white rounded-lg shadow-xl transform transition-all sm:w-full sm:max-w-md z-10">
-                <div class="px-6 py-4 border-b border-gray-100 bg-green-50 rounded-t-lg">
-                    <h3 class="text-lg font-medium text-green-800">Receive Stock: {{ selectedItem?.name }}</h3>
+            <div class="fixed inset-0 bg-black opacity-70 transition-opacity" @click="showAddStockModal = false"></div>
+            <div class="bg-gray-800 rounded-lg shadow-2xl transform transition-all sm:w-full sm:max-w-md z-10 border border-gray-700">
+                <div class="px-6 py-4 border-b border-gray-700 bg-green-900 bg-opacity-20 rounded-t-lg">
+                    <h3 class="text-lg font-medium text-green-400">Receive Stock: {{ selectedItem?.name }}</h3>
                 </div>
                 <div class="p-6">
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Quantity to Add</label>
-                            <input type="number" step="0.001" v-model="stockForm.quantity" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm" placeholder="0.00">
-                            <div v-if="stockForm.errors.quantity" class="text-red-500 text-xs mt-1">{{ stockForm.errors.quantity }}</div>
+                            <label class="block text-sm font-medium text-gray-300">Quantity to Add</label>
+                            <input type="number" step="0.001" v-model="stockForm.quantity" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm placeholder-gray-500" placeholder="0.00">
+                            <div v-if="stockForm.errors.quantity" class="text-red-400 text-xs mt-1">{{ stockForm.errors.quantity }}</div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Note (Optional)</label>
-                            <input type="text" v-model="stockForm.note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm" placeholder="e.g. Purchase Order #123">
+                            <label class="block text-sm font-medium text-gray-300">Note (Optional)</label>
+                            <input type="text" v-model="stockForm.note" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm placeholder-gray-500" placeholder="e.g. Purchase Order #123">
                         </div>
                     </div>
                     <div class="mt-6 flex justify-end space-x-3">
-                        <button type="button" @click="showAddStockModal = false" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
+                        <button type="button" @click="showAddStockModal = false" class="px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-600">Cancel</button>
                         <button type="button" @click="submitAddStock" :disabled="stockForm.processing" class="px-4 py-2 bg-green-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Confirm Add</button>
                     </div>
                 </div>
@@ -244,25 +244,25 @@ const submitDeductStock = () => {
 
         <!-- Deduct Stock Modal -->
         <div v-if="showDeductStockModal" class="fixed inset-0 overflow-y-auto px-4 py-6 z-50 flex items-center justify-center">
-            <div class="fixed inset-0 bg-gray-900 opacity-50 transition-opacity" @click="showDeductStockModal = false"></div>
-            <div class="bg-white rounded-lg shadow-xl transform transition-all sm:w-full sm:max-w-md z-10">
-                <div class="px-6 py-4 border-b border-gray-100 bg-red-50 rounded-t-lg">
-                    <h3 class="text-lg font-medium text-red-800">Deduct Stock: {{ selectedItem?.name }}</h3>
+            <div class="fixed inset-0 bg-black opacity-70 transition-opacity" @click="showDeductStockModal = false"></div>
+            <div class="bg-gray-800 rounded-lg shadow-2xl transform transition-all sm:w-full sm:max-w-md z-10 border border-gray-700">
+                <div class="px-6 py-4 border-b border-gray-700 bg-red-900 bg-opacity-20 rounded-t-lg">
+                    <h3 class="text-lg font-medium text-red-400">Deduct Stock: {{ selectedItem?.name }}</h3>
                 </div>
                 <div class="p-6">
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Quantity to Deduct</label>
-                            <input type="number" step="0.001" v-model="stockForm.quantity" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm" placeholder="0.00">
-                            <div v-if="stockForm.errors.quantity" class="text-red-500 text-xs mt-1">{{ stockForm.errors.quantity }}</div>
+                            <label class="block text-sm font-medium text-gray-300">Quantity to Deduct</label>
+                            <input type="number" step="0.001" v-model="stockForm.quantity" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm placeholder-gray-500" placeholder="0.00">
+                            <div v-if="stockForm.errors.quantity" class="text-red-400 text-xs mt-1">{{ stockForm.errors.quantity }}</div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Reason (Optional)</label>
-                            <input type="text" v-model="stockForm.note" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm" placeholder="e.g. Sales, Damaged">
+                            <label class="block text-sm font-medium text-gray-300">Reason (Optional)</label>
+                            <input type="text" v-model="stockForm.note" class="mt-1 block w-full rounded-md border-gray-600 bg-gray-900 text-white shadow-sm focus:border-red-500 focus:ring-red-500 sm:text-sm placeholder-gray-500" placeholder="e.g. Sales, Damaged">
                         </div>
                     </div>
                     <div class="mt-6 flex justify-end space-x-3">
-                        <button type="button" @click="showDeductStockModal = false" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">Cancel</button>
+                        <button type="button" @click="showDeductStockModal = false" class="px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-600">Cancel</button>
                         <button type="button" @click="submitDeductStock" :disabled="stockForm.processing" class="px-4 py-2 bg-red-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">Confirm Deduct</button>
                     </div>
                 </div>

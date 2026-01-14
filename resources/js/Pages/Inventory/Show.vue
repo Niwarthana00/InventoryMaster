@@ -14,10 +14,10 @@ const props = defineProps({
     <AuthenticatedLayout>
         <template #header>
             <div class="flex justify-between items-center">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                <h2 class="font-semibold text-xl text-gray-200 leading-tight">
                     Item Details: {{ item.name }}
                 </h2>
-                <Link :href="route('dashboard')" class="text-sm text-gray-600 hover:text-gray-900 underline">
+                <Link :href="route('dashboard')" class="text-sm text-gray-400 hover:text-white underline transition-colors">
                     &larr; Back to Dashboard
                 </Link>
             </div>
@@ -27,17 +27,17 @@ const props = defineProps({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 
                 <!-- Item Summary Card -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <div class="bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg p-6 border border-gray-700">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="p-4 bg-blue-50 rounded-lg border border-blue-100">
-                            <div class="text-sm text-blue-600 font-medium uppercase">Current Stock</div>
-                            <div class="mt-2 text-3xl font-bold text-gray-900">
-                                {{ parseFloat(item.quantity) }} <span class="text-lg font-normal text-gray-500">{{ item.unit }}</span>
+                        <div class="p-4 bg-gray-900 rounded-lg border border-blue-900">
+                            <div class="text-sm text-blue-400 font-medium uppercase">Current Stock</div>
+                            <div class="mt-2 text-3xl font-bold text-white">
+                                {{ parseFloat(item.quantity) }} <span class="text-lg font-normal text-gray-400">{{ item.unit }}</span>
                             </div>
                         </div>
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
-                            <div class="text-sm text-gray-600 font-medium uppercase">Last Updated</div>
-                            <div class="mt-2 text-lg font-semibold text-gray-900">
+                        <div class="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                            <div class="text-sm text-gray-400 font-medium uppercase">Last Updated</div>
+                            <div class="mt-2 text-lg font-semibold text-gray-200">
                                 {{ new Date(item.updated_at).toLocaleString() }}
                             </div>
                         </div>
@@ -45,41 +45,41 @@ const props = defineProps({
                 </div>
 
                 <!-- Transaction History -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        <h3 class="text-lg font-medium text-gray-900 mb-4">Transaction History</h3>
+                <div class="bg-gray-800 overflow-hidden shadow-lg sm:rounded-lg border border-gray-700">
+                    <div class="p-6 bg-gray-800 border-b border-gray-700">
+                        <h3 class="text-lg font-medium text-white mb-4">Transaction History</h3>
                         
                         <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
+                            <table class="min-w-full divide-y divide-gray-700">
+                                <thead class="bg-gray-900">
                                     <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Change</th>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Balance</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Note</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Type</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">User</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">Change</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">Balance</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Note</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr v-for="t in transactions" :key="t.id">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                                    <tr v-for="t in transactions" :key="t.id" class="hover:bg-gray-700 transition duration-150">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                                             {{ new Date(t.created_at).toLocaleString() }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                                                :class="t.type === 'add' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                                                :class="t.type === 'add' ? 'bg-green-900 text-green-200' : 'bg-red-900 text-red-200'">
                                                 {{ t.type.toUpperCase() }}
                                             </span>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                                             {{ t.user ? t.user.name : 'Unknown' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-medium"
-                                            :class="t.type === 'add' ? 'text-green-600' : 'text-red-600'">
+                                            :class="t.type === 'add' ? 'text-green-400' : 'text-red-400'">
                                             {{ t.type === 'add' ? '+' : '-' }}{{ parseFloat(t.quantity) }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 font-bold">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-white font-bold">
                                             {{ parseFloat(t.balance_after) }}
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-500">
