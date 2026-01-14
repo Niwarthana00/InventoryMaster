@@ -1,5 +1,5 @@
 # Setup PHP & Laravel App
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -29,7 +29,7 @@ WORKDIR /var/www
 COPY . /var/www
 
 # Install PHP dependencies
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer install --no-interaction --optimize-autoloader --no-dev --ignore-platform-reqs
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www \
