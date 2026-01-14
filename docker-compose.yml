@@ -9,6 +9,8 @@ services:
     volumes:
       - web-root-clean:/var/www
       - ./.env:/var/www/.env
+    links:
+      - db
     networks:
       - inventory-network
 

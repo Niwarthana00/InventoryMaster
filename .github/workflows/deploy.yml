@@ -55,7 +55,7 @@ jobs:
           echo "APP_DEBUG=false" >> .env
           echo "APP_URL=http://174.138.86.39" >> .env
           echo "DB_CONNECTION=mysql" >> .env
-          echo "DB_HOST=inventory-db" >> .env
+          echo "DB_HOST=db" >> .env
           echo "DB_PORT=3306" >> .env
           echo "DB_DATABASE=inventory_db" >> .env
           echo "DB_USERNAME=root" >> .env
