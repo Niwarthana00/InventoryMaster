@@ -166,12 +166,12 @@ const submitDeductStock = () => {
                 </div>
 
                 <!-- Main Content Table -->
-                <div class="bg-gray-900 overflow-hidden shadow-xl sm:rounded-lg border border-gray-800">
-                    <div class="bg-gray-900">
+                <div class="bg-[#010e21] overflow-hidden shadow-xl sm:rounded-lg border border-gray-800">
+                    <div class="bg-[#010e21]">
                         <!-- Table -->
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-700">
-                                <thead class="bg-gray-900">
+                                <thead class="bg-[#010e21]">
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Item Name</th>
                                         <th class="px-6 py-3 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Unit</th>
@@ -179,7 +179,7 @@ const submitDeductStock = () => {
                                         <th class="px-6 py-3 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                                <tbody class="bg-[#010e21] divide-y divide-gray-700">
                                     <tr v-for="item in items" :key="item.id" class="hover:bg-gray-700 transition duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm font-medium text-white">{{ item.name }}</div>
