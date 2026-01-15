@@ -40,11 +40,15 @@ services:
     volumes:
       - dbdata-clean:/var/lib/mysql
     networks:
-      - inventory-network
+      inventory-network:
+        ipv4_address: 172.25.0.5
 
 networks:
   inventory-network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
 
 volumes:
   dbdata-clean:
