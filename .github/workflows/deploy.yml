@@ -78,4 +78,4 @@ jobs:
           sleep 60
           
           # Run Migrations
-          # DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/inventory-app:latest docker-compose --env-file .env run --rm app php artisan migrate --force
+          DOCKER_IMAGE=${{ secrets.DOCKER_USERNAME }}/inventory-app:latest docker-compose --env-file .env exec -T app php artisan migrate --force
