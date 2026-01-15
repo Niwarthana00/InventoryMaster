@@ -43,14 +43,17 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|unique:items,name|max:255',
-            'unit' => 'required|string|max:10',
-            'quantity' => 'nullable|numeric|min:0',
+            'items' => 'required|array|min:1',
+            'items.*.name' => 'required|string|distinct|unique:items,name|max:255',
+            'items.*.unit' => 'required|string|max:10',
+            'items.*.quantity' => 'nullable|numeric|min:0',
         ]);
 
-        $this->inventoryService->createItem($request->all(), auth()->id());
+        foreach ($request->items as $itemData) {
+            $this->inventoryService->createItem($itemData, auth()->id());
+        }
 
-        return redirect()->back()->with('success', 'Item created successfully.');
+        return redirect()->back()->with('success', count($request->items) . ' items created successfully.');
     }
 
     /**
