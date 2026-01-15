@@ -270,7 +270,7 @@ const submitDeductStock = () => {
             <div class="fixed inset-0 bg-black opacity-80 transition-opacity" @click="showCreateModal = false"></div>
             <div class="bg-gray-800 rounded-lg shadow-2xl transform transition-all sm:w-full sm:max-w-md z-10 border border-gray-700">
                 <div class="px-6 py-4 border-b border-gray-700 flex justify-between items-center bg-gray-900 rounded-t-lg">
-                    <h3 class="text-lg font-medium text-white">Add Inventory Items</h3>
+                    <h3 class="text-lg font-medium text-white">Add Inventory Items (Update Checked)</h3>
                     <button @click="showCreateModal = false" class="text-gray-400 hover:text-white focus:outline-none">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
