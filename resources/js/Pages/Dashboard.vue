@@ -121,7 +121,7 @@ const submitDeductStock = () => {
                 <div class="bg-gray-900 overflow-hidden shadow-lg rounded-xl p-6 border border-gray-800 relative group hover:border-blue-500/30 transition duration-300">
                     <div class="flex justify-between items-start">
                         <div>
-                            <div class="text-sm font-medium text-gray-400">Total Items</div>
+                            <div class="text-sm font-medium text-gray-400">Total Inventory Items</div>
                             <div class="mt-2 text-4xl font-bold text-white tracking-tight">{{ totalItems }}</div>
                         </div>
                         <div class="p-3 bg-blue-500/10 rounded-lg text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition duration-300">
